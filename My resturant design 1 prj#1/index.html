@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!-- 
+    ============================================
+    PROJECT: K-2 Spice - Pizza Restaurant Website
+    PURPOSE: A single-page restaurant website with
+             Hero, Menu, Place, Ticker, About,
+             Contact, and Footer sections.
+    TECH:    Pure HTML + CSS (No frameworks)
+    ============================================
+-->
+
+<html lang="en">
+
+<head>
+    <!-- 
+        meta charset="UTF-8" 
+        → Tells the browser to use UTF-8 character encoding.
+        → This ensures special characters (like ₹, é, ü) render correctly.
+    -->
+    <meta charset="UTF-8">
+
+    <!-- 
+        meta viewport 
+        → Makes the page responsive on mobile devices.
+        → width=device-width: page width matches the screen width.
+        → initial-scale=1.0: prevents default zoom on mobile.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page title shown in the browser tab -->
+    <title>making the hero section for practice</title>
+
+    <!-- 
+        External CSS file link
+        → rel="stylesheet" tells the browser this is a style file.
+        → href points to the CSS file in the same folder.
+    -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 
+        =============================================
+        HEADER / NAVIGATION BAR
+        =============================================
+        → Fixed at the top of the viewport (position: fixed in CSS).
+        → Contains the brand logo and navigation links.
+        → Uses backdrop-filter: blur() for a frosted-glass effect.
+        → z-index: 1000 ensures it stays ABOVE all other content.
+        =============================================
+    -->
+    <header class="main-navbar">
+
+        <!-- Brand Logo: "K-2" is plain white, "Spice" gets a hover color -->
+        <div class="nav-logo">K-2 <span>Spice</span></div>
+
+        <!-- 
+            Navigation Links
+            → Uses an unordered list (<ul>) with list items (<li>).
+            → Each link uses href="#id" for smooth scrolling to sections.
+            → The IDs match the section IDs below (e.g., #home, #about).
+            → display: flex + gap creates even horizontal spacing.
+        -->
+
+        <ul class="nav-link"
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#Menu">Menu</a></li>
+            <li><a href="#place">Places</a></li>
+        </ul>
+    </header>
+
+
+    <!-- 
+        =============================================
+        HERO SECTION
+        =============================================
+        → Full viewport height (min-height: 100vh).
+        → Background: a restaurant image with a dark overlay 
+          using linear-gradient on top of the image.
+        → The overlay darkens the image so white text is readable.
+        → Has an entrance animation (scale + fade + slide).
+        → Contains: Main headline, description, and 2 CTA buttons.
+        =============================================
+    -->
+    <section class="hero-section" id="home">
+
+        <div class="hero-content">
+            <!-- 
+                Headline: 
+                → <span> tags highlight keywords "CRUST" and "PULLS" in orange.
+                → <br> breaks the line for a dramatic two-line effect.
+                → font-size: 3.5rem makes it the largest text on the page.
+            -->
+            <h1><span>CRUST</span> THAT THRILLS, <br>CHEESE THAT <span>PULLS</span></h1>
+
+            <!-- 
+                Description paragraph:
+                → max-width: 800px prevents the paragraph from getting 
+                  too wide on large screens (improves readability).
+                → line-height: 1.4 adds breathing room between lines.
+            -->
+            <p>Experience Lahore's ultimate stone-baked pizza loaded with premium ingredients and cooked to
+                perfection.Our Master chief was amazing in making dishes and food.
+            </p>
+
+            <!-- 
+                Call-to-Action (CTA) Buttons:
+                → Two buttons side by side using flexbox.
+                → hero-btn1: Primary action (dark bg, orange glow shadow).
+                → hero-btn2: Secondary action (transparent bg, border).
+                → ::after pseudo-element on btn2 adds "60%" badge dynamically via CSS.
+                → Both use transform: translateY(-6px) on hover for a "lift" effect.
+            -->
+            <div class="hero-btn">
+                <a href="#Menu" class="hero-btn1">Explore Menu 🍕</a>
+                <a href="#" class="hero-btn2">Special Offers!!</a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 
+        =============================================
+        MENU SECTION
+        =============================================
+        → Displays 6 pizza cards in a responsive grid.
+        → Grid uses: grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))
+          This means:
+            - Each card is AT LEAST 270px wide.
+            - auto-fit automatically calculates how many cards fit per row.
+            - 1fr makes cards stretch to fill remaining space.
+        → On desktop: likely 3-4 cards per row.
+        → On tablet: 2 cards per row.
+        → On mobile: 1 card per row.
+        → Each card has: image, title, description, price, order button.
+        → Cards have a glassmorphism effect (transparent bg + blur).
+        =============================================
+    -->
+    <section class="menu-section">
+        <!-- 
+            Section heading:
+            → ::before pseudo-element adds a burger emoji.
+            → Large text-shadow creates a retro/neon glow effect.
+        -->
+        <h2 id="Menu">K-2 <span>Menu Items!</span></h2>
+        <div class="menu-content">
+
+            <div class="menu-grid">
+
+                <!-- 
+                    MENU CARD (repeated 6 times)
+                    → Structure: image → title → description → price → button.
+                    → Hover effect: translateY(-10px) lifts the card up.
+                    → Box-shadow changes color on hover for a glow transition.
+                    → Image uses object-fit: cover to prevent distortion.
+                    → Card button uses a different cubic-bezier for a "bouncy" feel.
+                -->
+                <div class="menu-card">
+                    <img src="pizza small.jpg" alt="this is an image of pizza for my Menu item">
+                    <h3>Pepperoni Pizza</h3>
+                    <p class="card-desp">This pizza is very tasty and large size of boxes and 6 people can eat this.</p>
+                    <p class="card-price">Rs :10.00$</p>
+                    <div class="card-btn">
+                        <a href="#">Order Now!</a>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="pizza small.jpg" alt="this is an image of pizza for my Menu item">
+                    <h3>Pepperoni Pizza</h3>
+                    <p class="card-desp">This pizza is very tasty and large size of boxes and 6 people can eat this.</p>
+                    <p class="card-price">Rs :10.00$</p>
+                    <div class="card-btn">
+                        <a href="#">Order Now!</a>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="pizza small.jpg" alt="this is an image of pizza for my Menu item">
+                    <h3>Pepperoni Pizza</h3>
+                    <p class="card-desp">This pizza is very tasty and large size of boxes and 6 people can eat this.</p>
+                    <p class="card-price">Rs :10.00$</p>
+                    <div class="card-btn">
+                        <a href="#">Order Now!</a>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="pizza small.jpg" alt="this is an image of pizza for my Menu item">
+                    <h3>Pepperoni Pizza</h3>
+                    <p class="card-desp">This pizza is very tasty and large size of boxes and 6 people can eat this.</p>
+                    <p class="card-price">Rs :10.00$</p>
+                    <div class="card-btn">
+                        <a href="#">Order Now!</a>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="pizza small.jpg" alt="this is an image of pizza for my Menu item">
+                    <h3>Pepperoni Pizza</h3>
+                    <p class="card-desp">This pizza is very tasty and large size of boxes and 6 people can eat this.</p>
+                    <p class="card-price">Rs :10.00$</p>
+                    <div class="card-btn">
+                        <a href="#">Order Now!</a>
+                    </div>
+                </div>
+
+                <div class="menu-card">
+                    <img src="pizza small.jpg" alt="this is an image of pizza for my Menu item">
+                    <h3>Pepperoni Pizza</h3>
+                    <p class="card-desp">This pizza is very tasty and large size of boxes and 6 people can eat this.</p>
+                    <p class="card-price">Rs :10.00$</p>
+                    <div class="card-btn">
+                        <a href="#">Order Now!</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- 
+        =============================================
+        PLACE / OPEN AREA SECTION
+        =============================================
+        → Two-column layout: text on left, image on right.
+        → Uses Flexbox with flex: 1 1 300px on both children.
+          This means:
+            - flex-grow: 1 → each child grows equally to fill space.
+            - flex-shrink: 1 → each child can shrink if needed.
+            - flex-basis: 300px → starting width is 300px.
+        → On narrow screens, flex-wrap: wrap makes them stack vertically.
+        → Image has a floating animation (translateY up and down).
+        → Description has a dark background box for readability.
+        =============================================
+    -->
+    <section class="main-section" id="place">
+
+        <!-- Section heading with highlighted words -->
+        <div class="third-heading">
+            <h3>Open <span>Area</span> of <span>K-2</span></h3>
+        </div>
+
+        <div class="place-section">
+
+            <!-- Text content column -->
+            <div class="place-section-content">
+                <!-- ::before adds island emoji -->
+                <h3>Open Areas for Family</h3>
+                <p class="place-desp">Luxuary Open Area for family and open enjoyments Meal! Lorem ipsum dolor sit amet
+                    consectetur, adipisicing elit. Ullam, dolore.K-2 is very good and clean fo ropen environment and
+                    with plants and nature.</p>
+            </div>
+
+            <!-- Image column -->
+            <div class="place-image">
+                <img src="Place-image.jpg" alt="this is an image for place">
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 
+        =============================================
+        TICKER / MARQUEE ANIMATION SECTION
+        =============================================
+        → A horizontal scrolling text banner.
+        → HOW IT WORKS:
+            1. The items are listed TWICE (duplicated content).
+            2. The animation moves the track from 0 to translateX(-50%).
+            3. Since content is duplicated, when the first half scrolls out,
+               the second half is in the exact same position → seamless loop!
+        → overflow: hidden on the wrapper hides anything outside.
+        → white-space: nowrap prevents text from wrapping to next line.
+        → animation: 20s linear infinite → constant speed, never stops.
+        =============================================
+    -->
+    <section class="Text-animations">
+
+        <div class="ticker-wrapper">
+
+            <!-- 
+                The track holds all ticker items.
+                padding-right: 4rem creates gap between the end 
+                and the beginning of the loop.
+            -->
+            <div class="ticker-track">
+
+                <!-- First set of items -->
+                <span class="ticker-item">✨ 100% ORIGINAL FOOD</span>
+                <span class="ticker-item">🔥 PURE QUALITY & PURE MATERIALS</span>
+                <span class="ticker-item">👑 100% CUSTOMER SATISFIED</span>
+                <span class="ticker-item">🍕 FRESH FROM THE OVEN</span>
+
+                <!-- 
+                    DUPLICATED set of items!
+                    This is essential for the seamless infinite loop.
+                    Without duplication, there would be a visible "jump" 
+                    when the animation resets.
+                -->
+                <span class="ticker-item">✨ 100% ORIGINAL FOOD</span>
+                <span class="ticker-item">🔥 PURE QUALITY & PURE MATERIALS</span>
+                <span class="ticker-item">👑 100% CUSTOMER SATISFIED</span>
+                <span class="ticker-item">🍕 FRESH FROM THE OVEN</span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 
+        =============================================
+        ABOUT SECTION
+        =============================================
+        → Two-column layout similar to the Place section.
+        → Left: circular image (border-radius: 50%).
+        → Right: heading, paragraph, and a button.
+        → Uses flex: 1 with flex-basis for responsive behavior.
+        → NOTE: flex-wrap is currently commented out in CSS,
+          so on very small screens the columns may squeeze 
+          instead of stacking. Consider uncommenting it.
+        =============================================
+    -->
+    <section class="about" id="about">
+
+        <!-- Circular profile/image -->
+        <div class="about-img">
+            <img src="about-img.jpg" alt="this is an about-img for about-section">
+        </div>
+
+        <!-- About text content -->
+        <div class="about-content">
+            <h4>About us</h4>
+            <p class="about-desp">We have made this restaurant by a chance of our best friends then we decided to make
+                it
+                and run our business and yes we successfully reached our work and special thanks to my Best friends.</p>
+            <a href="#" class="about-btn">View More</a>
+        </div>
+    </section>
+
+
+    <!-- 
+        =============================================
+        CONTACT FORM SECTION
+        =============================================
+        → Contains an HTML form that submits to Formspree 
+          (a free form backend service).
+        → method="post" sends data securely.
+        → Form fields: Name, Phone, Age, Email, Message (textarea).
+        → All inputs use the same styling for consistency.
+        → Focus state changes border color to orange for feedback.
+        → Two buttons at the bottom:
+            - Reset: clears all form fields (transparent style).
+            - Submit: sends the form (orange/primary style).
+        → Buttons use flex: 1 to split the row 50/50.
+        → required attribute on inputs prevents empty submission.
+        =============================================
+    -->
+    <section class="contact-section" id="contact">
+
+        <div class="contact-form">
+
+            <h5>Contact <span>Form</span></h5>
+
+            <!-- 
+                form action points to Formspree endpoint.
+                Formspree receives the data and emails it to you.
+                Each input's "name" attribute becomes the email field label.
+            -->
+            <form action="https://formspree.io/f/xykqwzol" method="post">
+
+                <!-- 
+                    Label + Input pairs.
+                    "for" attribute in label matches "id" in input.
+                    Clicking the label focuses the input (accessibility).
+                -->
+                <label for="name">Name:</label>
+                <input type="text" name="username" id="name" required>
+
+                <label for="number">:Phone</label>
+                <input type="tel" name="phone_number" id="number" required>
+
+                <label for="Age">:Age</label>
+                <input type="number" name="user_age" id="Age" required>
+
+                <label for="email">:Email Address</label>
+                <input type="email" name="user_email" id="email" required>
+
+                <label for="message">Special Request / Message:</label>
+                <!-- 
+                    textarea: multi-line text input.
+                    rows="4" sets visible height to 4 lines.
+                    placeholder: gray hint text shown when empty.
+                -->
+                <textarea name="message" id="message" rows="4"
+                    placeholder="Any details or food preferences..."></textarea>
+
+                <!-- 
+                    Button container:
+                    → flexbox with gap: 10px spaces the buttons.
+                    → Each button uses flex: 1 to share width equally.
+                -->
+                <div class="form-buttons">
+                    <!-- type="reset" automatically clears all form fields -->
+                    <input type="reset" value="Clear Form">
+                    <!-- type="submit" sends the form data to the action URL -->
+                    <input type="submit" value="Submit Message">
+                </div>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- 
+        =============================================
+        FOOTER SECTION
+        =============================================
+        → Three-column layout using flexbox.
+        → Each column has a heading (<h6>) and an unordered list.
+        → Columns: QNA (FAQ), About Website, Privacy & Policy.
+        → Hover effects on headings and list items for interactivity.
+        → On mobile (max-width: 700px), columns stack vertically.
+        → Uses backdrop-filter: blur() for glassmorphism.
+        → border-top creates a visual separator from content above.
+        =============================================
+    -->
+    <footer class="footer-section">
+        <div class="footer-content">
+
+            <!-- Column 1: FAQ -->
+            <div class="faq">
+                <h6>QNA</h6>
+                <ul>
+                    <li>Our dishes</li>
+                    <li>our location</li>
+                    <li>our Manager</li>
+                    <li>Get number</li>
+                </ul>
+            </div>
+
+            <!-- Column 2: About Website -->
+            <div class="Information">
+                <h6>About Website</h6>
+                <ul>
+                    <li>Who made this website?</li>
+                    <li>the deleted content</li>
+                    <li>about developer</li>
+                    <li>developer projects</li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Privacy Policy -->
+            <div class="privacy">
+                <h6>privacy & Policy</h6>
+                <ul>
+                    <li>our terms</li>
+                    <li>our system</li>
+                    <li>our editor</li>
+                    <li>our designer</li>
+                </ul>
+            </div>
+
+        </div>
+    </footer>
+
+</body>
+
+</html>

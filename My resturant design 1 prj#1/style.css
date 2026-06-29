@@ -1,0 +1,1217 @@
+/* 
+   ============================================
+   K-2 SPICE - PIZZA RESTAURANT WEBSITE
+   Complete CSS with detailed explanations
+   ============================================
+   
+   COLOR PALETTE USED:
+   ─────────────────────────────────────────
+   #ffc933    → Gold/Yellow (primary accent)
+   #ffaa42    → Orange (secondary accent)
+   #ffdd00b0  → Light yellow with transparency
+   #0b0f19    → Very dark navy (darkest bg)
+   #1e293b    → Dark slate (form bg)
+   #cbd5e1    → Light gray (body text)
+   #ffffff    → White (headings, highlights)
+   #000000    → Black (shadows, borders)
+   ─────────────────────────────────────────
+   
+   KEY TECHNIQUES USED:
+   1. Glassmorphism → backdrop-filter: blur() + transparent bg
+   2. CSS Grid → auto-fit responsive menu cards
+   3. Flexbox → navbar, place section, about, footer
+   4. CSS Animations → hero entrance, image float, ticker scroll
+   5. Pseudo-elements → ::before for emojis, ::after for badge
+   6. CSS Variables → NOT used (could be added for maintainability)
+   ============================================
+*/
+
+
+/* 
+   UNIVERSAL RESET (*)
+   ─────────────────────────────────────────
+   → Applies to EVERY element on the page.
+   → margin: 0 removes default browser margins
+     (e.g., <h1> has default top/bottom margin).
+   → padding: 0 removes default browser padding
+     (e.g., <ul> has default left padding).
+   → box-sizing: border-box makes width/height 
+     INCLUDE padding and border.
+     
+   WITHOUT border-box:
+     total width = width + padding + border
+   
+   WITH border-box:
+     total width = width (padding and border are INSIDE)
+   
+   This is considered a best practice for all projects.
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+
+/* 
+   BODY STYLES
+   ─────────────────────────────────────────
+   → background: #ffc933 is the fallback for browsers 
+     that don't support gradients.
+   → linear-gradient(90deg, ...) creates a horizontal gradient
+     from gold (#ffc933) to dark brown (#875100).
+   → overflow-x: hidden prevents horizontal scrollbar 
+     even if content overflows sideways.
+     (Useful when elements have transforms that push outside viewport)
+*/
+body {
+    background: #ffc933;
+    background: linear-gradient(90deg, rgba(255, 201, 51, 1) 0%, rgba(135, 81, 0, 1) 100%);
+    overflow-x: hidden;
+}
+
+
+/* 
+   ============================================
+   NAVIGATION BAR
+   ============================================
+   → position: fixed → stays at top even when scrolling.
+   → z-index: 1000 → ensures navbar is above ALL other content.
+     (Higher z-index = closer to the viewer)
+   → backdrop-filter: blur(10px) → frosted glass effect.
+     Blurs whatever is BEHIND the navbar.
+   → background-color with alpha (0.762) → semi-transparent dark.
+   → The combination of transparent bg + blur = glassmorphism.
+   → border-bottom creates a thin white line as separator.
+*/
+.main-navbar {
+    display: flex;
+    justify-content: space-between;  /* Logo left, links right */
+    align-items: center;              /* Vertically centered */
+    width: 100%;
+    height: 70px;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    padding: 0 40px;                  /* 40px left and right padding */
+    background-color: rgba(15, 23, 42, 0.762);  /* Semi-transparent dark */
+    border-bottom: 2px solid rgb(255, 255, 255);
+}
+
+/* 
+   NAV LOGO
+   → font-style: italic gives it a branded feel.
+   → The nested <span> ("Spice") gets a separate hover color.
+*/
+.nav-logo {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* 
+   NAV LINKS
+   → display: flex + gap: 2rem creates evenly spaced items.
+   → list-style: none removes bullet points.
+   → letter-spacing: 1px adds slight spacing between characters.
+   → cubic-bezier(0.165, 0.84, 0.44, 1) is a custom easing curve
+     that gives a smooth, slightly bouncy transition.
+*/
+.nav-link {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    align-items: center;
+    letter-spacing: 1px;
+    font-size: 1.05rem;
+}
+
+/* 
+   NAV LINK ANCHOR TAGS
+   → text-decoration: none removes the default underline.
+   → color: azure is a light cyan-white color.
+   → transition: all means ALL CSS properties that change 
+     on hover will be animated (color, background, etc.).
+*/
+.nav-link a {
+    text-decoration: none;
+    color: azure;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* Hover state: turns links orange */
+.nav-link a:hover {
+    color: #ffaa42;
+}
+
+/* Logo span hover: also turns orange */
+.nav-logo span {
+    transition: all ease 0.3s;
+}
+.nav-logo span:hover {
+    color: #ffaa42;
+}
+
+
+/* 
+   ============================================
+   NAVBAR RESPONSIVE BREAKPOINT
+   ============================================
+   → @media (max-width: 768px) targets screens 768px and smaller.
+   → flex-direction: column stacks logo and links vertically.
+   → height: max-content → height adjusts to fit content
+     instead of being fixed at 70px.
+   → This is a simple responsive approach; 
+     a hamburger menu would be more polished.
+*/
+@media (max-width: 768px) {
+    .main-navbar {
+        flex-direction: column;
+        align-items: center;
+        height: max-content;
+    }
+    .nav-link {
+        margin: 1rem;  /* Adds space around links when stacked */
+    }
+}
+
+
+/* 
+   ============================================
+   HERO SECTION
+   ============================================
+   → min-height: 100vh → takes at least the full viewport height.
+     This ensures the hero is always full-screen, even with little content.
+   → display: flex + flex-direction: column + align-items/justify-content: center
+     → This combination perfectly centers content both horizontally and vertically.
+   → background shorthand:
+     1. linear-gradient(rgba dark overlay) → darkens the image for text readability.
+     2. url(image) → the background image.
+     3. no-repeat → prevents image tiling.
+     4. center center → centers the image both horizontally and vertically.
+     5. /cover → scales the image to cover the entire section 
+        (may crop edges, but never leaves empty space).
+   
+   → The gradient overlay uses TWO rgba colors:
+     - rgba(11, 15, 25, 0.41) → 41% opacity dark at the top.
+     - rgba(11, 15, 25, 0.85) → 85% opacity dark at the bottom.
+     This creates a vignette effect (darker at bottom, lighter at top).
+   
+   → ANIMATION BREAKDOWN:
+     - animation-name: refers to the @keyframes below.
+     - animation-timing-function: cubic-bezier for custom speed curve.
+     - animation-duration: 2s → takes 2 seconds.
+     - animation-iteration-count: 1 → plays only once.
+     - animation-fill-mode: forwards → keeps the FINAL state 
+       (opacity: 1, scale: 1) after animation ends.
+       Without this, it would snap back to the initial state.
+     - animation-play-state: running → animation plays automatically.
+*/
+.hero-section {
+    padding: 40px 40px;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(rgba(11, 15, 25, 0.41), rgba(11, 15, 25, 0.85)),
+        url(landscape-resturant.jpg) no-repeat center center/cover;
+    animation-name: Hero-animation;
+    animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+/* 
+   HERO ENTRANCE ANIMATION KEYFRAMES
+   → 0%: Starts invisible (opacity: 0), slightly smaller (scale: 0.90), at original position.
+   → 50%: Slides 30px to the right (creates a "swoosh" feel).
+   → 100%: Returns to original position, fully visible, full size.
+   
+   This creates a "slide in from left, overshoot slightly, settle back" effect.
+*/
+@keyframes Hero-animation {
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+        scale: 0.90;
+    }
+    50% {
+        transform: translateX(30px);
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+/* 
+   HERO HEADING
+   → margin-top: 10rem pushes heading down to account for 
+     the fixed navbar (otherwise navbar would overlap the heading).
+     10rem = 160px, which is more than enough for the 70px navbar.
+   → letter-spacing: 2px adds wide character spacing for impact.
+   → font-weight: 900 is the boldest weight available.
+*/
+.hero-content h1 {
+    color: rgb(255, 250, 240);
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-top: 10rem;
+}
+
+/* Highlighted keywords in the heading */
+.hero-content h1 span {
+    color: #ffaa42;  /* Orange accent */
+}
+
+/* 
+   HERO PARAGRAPH
+   → max-width: 800px prevents the text from becoming too wide.
+     Optimal line length for readability is 45-75 characters.
+   → line-height: 1.4 adds vertical space between lines.
+*/
+.hero-content p {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    margin-top: 1.5rem;
+    max-width: 800px;
+}
+
+
+/* 
+   HERO BUTTONS
+   ─────────────────────────────────────────
+   → The .hero-btn container uses flexbox to place 
+     buttons side by side with gap: 2rem (32px).
+   → margin-top: 2.5rem adds space above the buttons.
+*/
+.hero-btn {
+    gap: 2rem;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+}
+
+/* 
+   PRIMARY BUTTON (hero-btn1)
+   → Dark background with orange border and glow shadow.
+   → box-shadow: 0 4px 6px #ffaa42a4 creates an orange glow below.
+     Format: offset-x offset-y blur-radius color
+   → Hover: changes to bright yellow bg, lifts up, text turns black.
+   → transform: translateY(-6px) moves the button UP by 6px 
+     creating a "lift" or "pop" effect.
+*/
+.hero-btn1 {
+    padding: 12px 16px;
+    font-size: 1.05rem;
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border: 1px solid #ffd53cad;
+    border-radius: 5px;
+    color: #cbd5e1;
+    background-color: rgba(15, 23, 42, 0.85);
+    letter-spacing: 0.8px;
+    box-shadow: 0 4px 6px #ffaa42a4;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hero-btn1:hover {
+    background-color: rgba(255, 238, 46, 0.814);
+    transform: translateY(-6px);
+    color: #000;
+    box-shadow: 0 6px 8px #ffaa42;  /* Larger glow on hover */
+}
+
+/* 
+   SECONDARY BUTTON (hero-btn2)
+   → ::after pseudo-element adds a "60%" badge WITHOUT modifying HTML.
+     This is a pure CSS technique to add content dynamically.
+   → content: '60%' → the text to display.
+   → padding, border-radius, color style it as a small badge.
+   → margin-left: 8px spaces it from the button text.
+   → Transparent background with white border = "ghost button" style.
+*/
+.hero-btn2::after {
+    content: '60%';
+    background: #ffd518d4;
+    padding: 2px 3px;
+    border-radius: 5px;
+    color: #000;
+    margin-left: 8px;
+}
+
+.hero-btn2 {
+    background: #00000084;
+    backdrop-filter: blur(10px);
+    padding: 12px 16px;
+    border-radius: 6px;
+    border: 1px solid white;
+    box-shadow: 0 4px 4px #ff9615a4;
+    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+/* Lifts higher than btn1 (-8px vs -6px) for visual variety */
+.hero-btn2:hover {
+    box-shadow: 0 6px 8px #ff9615a4;
+    transform: translateY(-8px);
+    background-color: #cbd5e1;
+    color: #000;
+}
+
+/* 
+   Link color inside hero buttons
+   → This is overridden by the individual button styles above,
+     but serves as a fallback/base style.
+*/
+.hero-btn a {
+    text-decoration: none;
+    color: #cbd5e1;
+}
+
+
+/* 
+   ============================================
+   MENU SECTION
+   ============================================
+*/
+
+/* 
+   MENU SECTION HEADING
+   → Large text with a dramatic text-shadow for neon glow effect.
+   → text-shadow: 0 15px 10px #000000
+     → 0 horizontal offset, 15px down, 10px blur, black color.
+     → Creates a heavy drop shadow below the text.
+   → ::before pseudo-element adds burger emoji before the text.
+   → High margin-top and margin-bottom create breathing room.
+*/
+.menu-section h2 {
+    padding: 4rem;
+    text-align: center;
+    font-size: 3.2rem;
+    text-shadow: 0 15px 10px #000000;
+    letter-spacing: 1.2;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 80px;
+    color: #ffdd00b0;
+    margin-top: 80px;
+}
+
+/* Burger emoji before heading */
+.menu-section h2::before {
+    content: '🍔';
+}
+
+/* "Menu Items!" in lighter color for contrast */
+.menu-section h2 span {
+    color: #cbd5e1;
+}
+
+/* 
+   MENU GRID - THE MAGIC RESPONSIVE LAYOUT
+   ─────────────────────────────────────────
+   → grid-template-columns: repeat(auto-fit, minmax(270px, 1fr))
+   
+   BREAKING THIS DOWN:
+   - repeat() → repeats the column pattern.
+   - auto-fit → CSS automatically calculates how many columns fit.
+     If space allows 4 columns → 4 columns.
+     If space allows 2 columns → 2 columns.
+     If space allows 1 column → 1 column.
+     NO MEDIA QUERIES NEEDED!
+   - minmax(270px, 1fr) → each column is AT LEAST 270px wide,
+     and AT MOST 1fr (equal fraction of remaining space).
+   
+   → gap: 2rem → 32px space between grid items.
+   → max-width: 1200px → prevents the grid from getting too wide.
+   → margin: 0 auto → centers the grid horizontally.
+*/
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 
+   MENU CARD
+   → background-color with alpha → semi-transparent dark.
+   → backdrop-filter: blur(10px) → glassmorphism effect.
+   → border-radius: 12px → rounded corners.
+   → Hover: lifts up 10px, shadow changes to golden glow.
+   → cubic-bezier(0.215, 0.610, 0.355, 1) → slightly different 
+     easing for variety from the navbar easing.
+*/
+.menu-card {
+    background-color: #1d1d01a6;
+    backdrop-filter: blur(10px);
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid black;
+    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1);
+    box-shadow: 0 4px 8px #cbd5e1;
+}
+
+.menu-card:hover {
+    transform: translateY(-10px);     /* Lifts card up */
+    box-shadow: 0 8px 10px #ffe596;  /* Golden glow */
+    background-color: #1d1d01cd;     /* Slightly more opaque */
+}
+
+/* Card title */
+.menu-card h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 15px;
+    font-weight: 400;
+    letter-spacing: 0.8px;
+    color: #ffc933;
+}
+
+/* Card description */
+.card-desp {
+    text-align: justify;  /* Aligns text to both left and right edges */
+    color: #cbd5e1;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+/* Card price */
+.card-price {
+    color: #ffc933;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: italic;
+}
+
+/* 
+   CARD IMAGE
+   → width: 500px → sets a base width (will be constrained by max-width).
+   → max-width: 100% → NEVER exceeds the card's width.
+     This is the critical responsive image rule.
+   → object-fit: cover → fills the space without distortion.
+     The image may be cropped, but it won't be stretched.
+   → height: auto → maintains the image's original aspect ratio.
+*/
+.menu-card img {
+    width: 500px;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Card button container - aligned to the right */
+.card-btn {
+    text-align: right;
+    margin: 20px;
+    letter-spacing: 1px;
+}
+
+/* 
+   CARD ORDER BUTTON
+   → Normal: dark gold background with dark border.
+   → Hover: bright gold background, black text, dark border.
+   → cubic-bezier(0.175, 0.885, 0.32, 1.275) → this specific 
+     curve creates an "overshoot" effect (slightly bouncy).
+*/
+.card-btn a {
+    color: #ffe70f;
+    text-decoration: none;
+    background-color: #846100a4;
+    backdrop-filter: blur(10px);
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid black;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-btn a:hover {
+    background-color: #ffc933ba;
+    color: black;
+    border: 2px solid rgba(0, 0, 0, 0.775);
+}
+
+
+/* 
+   ============================================
+   PLACE / OPEN AREA SECTION
+   ============================================
+*/
+
+/* 
+   PLACE SECTION - TWO COLUMN FLEX LAYOUT
+   → display: flex → children sit side by side.
+   → flex-wrap: wrap → if children don't fit, they wrap to next line.
+     This is what makes it responsive without media queries!
+   → justify-content: space-between → pushes children to opposite edges.
+   → align-items: center → vertically centers both columns.
+   → gap: 2rem → 32px space between columns.
+*/
+.place-section {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 
+   PLACE TEXT COLUMN
+   → flex: 1 1 300px breakdown:
+     - flex-grow: 1 → can grow to fill available space.
+     - flex-shrink: 1 → can shrink if space is tight.
+     - flex-basis: 300px → starts at 300px wide.
+   → When two children both have flex: 1 1 300px and the parent
+     is 1200px wide with 32px gap:
+     Available space = 1200 - 32 = 1168px
+     Each child gets: 1168 / 2 = 584px
+   → On mobile (e.g., 400px screen):
+     400px can't fit two 300px columns, so flex-wrap kicks in
+     and they stack vertically, each taking full width.
+*/
+.place-section-content {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+/* Place image column - same flex values for equal split */
+.place-image {
+    display: flex;
+    flex: 1 1 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 
+   PLACE IMAGE - FLUID IMAGE TECHNIQUE
+   → width: 100% → fills the parent container.
+   → max-width: 400px → but NEVER exceeds 400px.
+     On desktop: image is 400px (constrained by max-width).
+     On mobile: image is 100% of the container width (smaller than 400px).
+   → height: auto → maintains aspect ratio.
+   → border-radius: 10px → rounded corners.
+   → Has a floating animation applied below.
+*/
+.place-section img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    animation: OpenArea-image 2s ease infinite;
+}
+
+/* 
+   FLOATING IMAGE ANIMATION
+   → Moves the image up and down 15px continuously.
+   → box-shadow changes between gold and dark brown.
+   → ease timing → starts slow, speeds up, slows down.
+   → infinite → never stops.
+   → This creates a gentle "hovering" effect.
+*/
+@keyframes OpenArea-image {
+    0% {
+        transform: translateY(0);
+        box-shadow: 0 10px 8px gold;
+    }
+    50% {
+        transform: translateY(15px);  /* Moves DOWN 15px */
+        box-shadow: 0 10px 10px rgba(78, 67, 10, 0.669);
+    }
+    100% {
+        transform: translateY(0px);   /* Returns to start */
+        box-shadow: 0 10px 8px gold;
+    }
+}
+
+/* 
+   PLACE SECTION HEADING
+   → Same styling pattern as menu heading for consistency.
+   → <span> elements highlight "Area" and "K-2" in light gray.
+*/
+.third-heading {
+    text-align: center;
+    padding: 2rem;
+    margin: 60px;
+    font-size: 2.6rem;
+    text-shadow: 0 15px 10px #000000;
+    letter-spacing: 1.2;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 80px;
+    color: #ffdd00b0;
+    margin-top: 80px;
+}
+
+.third-heading span {
+    color: #cbd5e1;
+}
+
+/* 
+   SMOOTH SCROLLING
+   → Applied to the <html> element.
+   → When clicking anchor links (#home, #menu, etc.),
+     the page smoothly scrolls instead of jumping instantly.
+   → scroll-margin-top is commented out but would offset 
+     the scroll position to account for the fixed navbar.
+*/
+html {
+    scroll-behavior: smooth;
+}
+
+/* Place section sub-heading */
+.place-section-content h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #000000b0;
+}
+
+/* Island emoji before the sub-heading */
+.place-section-content h3::before {
+    content: '🏝️';
+    font-size: 2rem;
+}
+
+/* 
+   PLACE DESCRIPTION
+   → Dark background box with rounded corners.
+   → This "card within a section" approach improves readability
+     against the gold gradient background.
+   → font-family: 'Courier New' → monospace font for a 
+     different visual texture from the rest of the page.
+*/
+.place-desp {
+    line-height: 1.3;
+    font-size: 1.3rem;
+    color: #ffd587;
+    background-color: #0000008e;
+    border-radius: 10px;
+    font-weight: 500;
+    padding: 12px 14px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 10px;
+}
+
+
+/* 
+   ============================================
+   TICKER / MARQUEE ANIMATION SECTION
+   ============================================
+   
+   HOW THE INFINITE LOOP WORKS:
+   ─────────────────────────────────────────
+   1. We have 8 items total: 4 unique + 4 duplicates.
+   2. The animation moves translateX from 0 to -50%.
+   3. -50% means the track moves left by half its total width.
+   4. Since items 1-4 and items 5-8 are identical,
+      when the first half has scrolled out of view,
+      the second half is in the EXACT same position
+      as the first half was at the start.
+   5. The animation resets to 0%, but visually nothing changes
+      → SEAMLESS LOOP!
+   
+   If we only had 4 items and translated -100%,
+   there would be a visible "jump" when it resets.
+*/
+
+/* 
+   TICKER WRAPPER
+   → overflow: hidden → hides anything that scrolls past the edges.
+   → border-top/bottom → creates visual separators.
+   → width: 100% → spans the full page width.
+*/
+.ticker-wrapper {
+    margin-top: 3rem;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    padding: 16px 0;
+    border-top: 2px solid #0b0f19;
+    border-bottom: 2px solid #0b0f19;
+}
+
+/* 
+   TICKER TRACK
+   → display: flex → items sit in a row.
+   → white-space: nowrap → prevents text from wrapping to next line.
+   → gap: 4rem → 64px space between each item.
+   → padding-right: 4rem → extra space at the end before the loop resets.
+   → animation: marqueeScroll 20s linear infinite
+     - 20s → one full loop takes 20 seconds.
+     - linear → constant speed, no acceleration/deceleration.
+     - infinite → never stops.
+*/
+.ticker-track {
+    display: flex;
+    white-space: nowrap;
+    gap: 4rem;
+    padding-right: 4rem;
+    animation: marqueeScroll 20s linear infinite;
+}
+
+/* 
+   Individual ticker items
+   → Dark color against the gold background.
+   → Heavy font-weight: 900 for impact.
+   → text-shadow with gold creates a glowing outline effect.
+*/
+.ticker-item {
+    font-family: 'Courier New', Courier, monospace;
+    color: #0b0f19;
+    font-size: 1.2rem;
+    letter-spacing: 1.5;
+    font-weight: 900;
+    text-shadow: 0 10px 8px #ffd84bc8;
+}
+
+/* 
+   THE KEYFRAME: moves from 0 to -50%.
+   → At 0%: track is at its starting position.
+   → At 100%: track has moved left by 50% of its total width.
+   → Since content is duplicated, 50% = exactly one full set of items.
+*/
+@keyframes marqueeScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* 
+   Hover on ticker: keeps animation running.
+   → A common pattern is to PAUSE on hover (animation-play-state: paused).
+   → Here it's set to "running" which means it keeps going.
+   → Could be changed to "paused" if you want hover-to-stop behavior.
+*/
+.ticker-wrapper:hover .ticker-track {
+    animation-play-state: running;
+    cursor: pointer;
+}
+
+
+/* 
+   ============================================
+   ABOUT SECTION
+   ============================================
+   → Two-column flexbox layout (image left, text right).
+   → Similar pattern to the Place section.
+   → Image is circular (border-radius: 50%).
+   → NOTE: flex-wrap is commented out, which means on very small 
+     screens the columns will squeeze rather than stack.
+     Consider adding flex-wrap: wrap for true responsiveness.
+*/
+.about {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4%;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+}
+
+/* 
+   ABOUT IMAGE
+   → flex: 1 → grows to fill equal space.
+   → flex-basis: 1 1 330px → NOTE: this is incorrect syntax!
+     flex-basis should be a single value like "330px".
+     The "1 1" part should be in the "flex" shorthand.
+     Currently it's being ignored by the browser.
+   → border-radius: 50% on the img makes it a perfect circle.
+   → The image will look best if it's square (equal width and height).
+*/
+.about-img {
+    flex: 1;
+    flex-basis: 1 1 330px;  /* ⚠️ Should be just "flex: 1 1 330px;" */
+    display: flex;
+    justify-content: center;
+}
+
+.about-img img {
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 50%;  /* Makes the image circular */
+}
+
+/* About text content */
+.about-content {
+    display: flex;
+    flex: 1;
+    flex-basis: 1 1 330px;  /* ⚠️ Same issue as above */
+    align-items: center;
+    flex-direction: column;
+}
+
+/* About heading */
+.about-content h4 {
+    font-size: 2.6rem;
+    line-height: 2;
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* About paragraph */
+.about-content p {
+    line-height: 1.4;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: 1px;
+    font-weight: 600;
+    text-align: justify;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* 
+   ABOUT BUTTON
+   → Dark transparent background with gold border.
+   → backdrop-filter: blur for glassmorphism.
+   → Hover: fully opaque black, border color changes, 
+     border-radius increases (subtle shape morph).
+*/
+.about-content a {
+    text-decoration: none;
+    color: #ffffffe7;
+    background: #000000bd;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ffe70f;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.about-btn {
+    margin-top: 20px;
+}
+
+.about-content a:hover {
+    background: #000000;  /* Fully opaque on hover */
+    border-radius: 12px;  /* Slightly more rounded */
+    border: 1px solid rgba(166, 141, 0, 0.809);
+}
+
+
+/* 
+   ============================================
+   CONTACT FORM SECTION
+   ============================================
+*/
+
+/* Contact section wrapper */
+.contact-section {
+    padding: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Contact heading */
+.contact-section h5 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 30px;
+    color: #cbd5e1;
+    text-shadow: 0 10px 8px black;
+}
+
+/* "Form" in gold */
+.contact-section h5 span {
+    color: rgba(247, 229, 35, 0.734);
+}
+
+/* 
+   FORM CONTAINER
+   → Dark slate background (not pure black for softer feel).
+   → Orange border to match the site's accent color.
+   → max-width: 1200px + margin: 0 auto → centered, max width.
+   → border-radius: 12px → rounded card look.
+*/
+.contact-form {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #1e293b;
+    border-radius: 12px;
+    border: 2px solid #ffaa42;
+}
+
+/* 
+   FORM LAYOUT
+   → flex-direction: column → stacks all fields vertically.
+   → gap: 15px → 15px space between each field.
+*/
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 
+   FORM LABELS
+   → text-transform: uppercase → all letters are capital.
+   → Orange color matches the site theme.
+   → font-weight: 600 for readability.
+*/
+.contact-form label {
+    font-family: sans-serif;
+    color: #ffaa42;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* 
+   FORM INPUTS (text, email, number, tel, textarea)
+   → All styled identically for consistency.
+   → width: 100% → fills the form container.
+   → padding: 12px → comfortable clickable area.
+   → background: very dark navy → contrasts with the slate form bg.
+   → border: subtle orange tint → visible but not harsh.
+   → color: white → text is white.
+   → outline: none → removes the default blue focus outline.
+     (We add our own focus style below).
+   → transition: all 0.3s ease → smooth border color change on focus.
+*/
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="number"],
+.contact-form input[type="tel"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: #0b0f19;
+    border: 1px solid rgba(255, 170, 66, 0.3);  /* Subtle orange border */
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* 
+   FOCUS STATE
+   → When user clicks into an input/textarea:
+   → Border changes to solid orange → clear visual feedback
+     that this field is active.
+   → This replaces the default browser focus outline 
+     (which was removed with outline: none above).
+*/
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #ffaa42;
+}
+
+/* 
+   FORM BUTTONS CONTAINER
+   → display: flex → buttons side by side.
+   → gap: 10px → space between buttons.
+*/
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 
+   FORM BUTTONS (shared styles)
+   → flex: 1 → each button takes 50% of the row.
+   → padding: 12px → comfortable click target.
+   → cursor: pointer → shows hand cursor on hover.
+   → border-radius: 6px → rounded corners.
+*/
+.form-buttons input {
+    flex: 1;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* 
+   RESET BUTTON
+   → Transparent background → looks like an outline button.
+   → Light gray border and text → subtle, secondary action.
+*/
+.form-buttons input[type="reset"] {
+    background-color: transparent;
+    border: 1px solid #cbd5e1;
+    color: #cbd5e1;
+}
+
+/* 
+   SUBMIT BUTTON
+   → Solid orange background → primary action, draws attention.
+   → Dark text for contrast against orange.
+   → no border → clean, filled look.
+*/
+.form-buttons input[type="submit"] {
+    background-color: #ffaa42;
+    border: none;
+    color: #0b0f19;
+}
+
+/* Submit hover: slightly lighter orange + lifts up */
+.form-buttons input[type="submit"]:hover {
+    background-color: #ffbe6b;  /* Lighter orange */
+    transform: translateY(-2px);  /* Subtle lift */
+}
+
+
+/* 
+   ============================================
+   FOOTER SECTION
+   ============================================
+   → Three-column layout using flexbox.
+   → Glassmorphism style (transparent bg + blur).
+   → border-top creates separation from content above.
+   → On mobile: columns stack vertically.
+*/
+
+/* 
+   FOOTER CONTENT CONTAINER
+   → flex-wrap: wrap → allows columns to wrap on small screens.
+   → background: semi-transparent dark with blur → glassmorphism.
+   → padding: 20px 5% → 20px vertical, 5% horizontal (responsive padding).
+*/
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: #0b0f1993;
+    backdrop-filter: blur(10px);
+    padding: 20px 5%;
+    border-top: 2px solid rgb(0, 0, 0);
+    transition: all 0.3s ease;
+}
+
+/* 
+   FOOTER COLUMN STYLES
+   → All three columns (faq, Information, privacy) share 
+     the same styling pattern:
+     - h6: heading in orange, turns black on hover.
+     - ul li: list items in semi-transparent white.
+     - list-style: none removes bullet points.
+     - Each column's hover color is slightly different 
+       (orange, gold, yellow) for subtle variety.
+*/
+
+/* FAQ Column */
+.faq h6 {
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.4;
+    color: #ffaa42;
+    transition: 0.3s all ease;
+}
+
+.faq ul li {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.76);  /* 76% opacity white */
+    transition: all 0.3s ease;
+    line-height: 1.2;
+    list-style: none;
+}
+
+.faq h6:hover {
+    color: #000;
+}
+
+.faq ul li:hover {
+    color: #ffaa42;  /* Orange on hover */
+}
+
+/* Information Column */
+.Information h6 {
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.4;
+    color: #ffaa42;
+    transition: 0.3s all ease;
+}
+
+.Information h6:hover {
+    color: black;
+}
+
+.Information ul li {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.76);
+    transition: all 0.3s ease;
+    line-height: 1.2;
+    list-style: none;
+}
+
+.Information ul li:hover {
+    color: #ffc933;  /* Gold on hover */
+}
+
+/* Privacy Column */
+.privacy h6 {
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 1.4;
+    color: #ffaa42;
+    transition: 0.3s all ease;
+}
+
+.privacy h6:hover {
+    color: black;
+}
+
+.privacy ul li {
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.76);
+    transition: all 0.3s ease;
+    line-height: 1.2;
+    list-style: none;
+}
+
+.privacy ul li:hover {
+    color: yellow;  /* Yellow on hover */
+}
+
+/* 
+   FOOTER RESPONSIVE BREAKPOINT
+   → On screens 700px and smaller:
+   → flex-direction: column → stacks all three columns vertically.
+   → text-align: center → centers all text.
+   → This prevents the columns from being squeezed too narrow.
+*/
+@media (max-width: 700px) {
+    .footer-content {
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+}
